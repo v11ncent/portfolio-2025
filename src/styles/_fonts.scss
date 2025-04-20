@@ -6,15 +6,13 @@
 @font-face {
   font-family: "Franklin Gothic";
   font-weight: 100 400;
-  src: local("Franklin Gothic"),
-    url("/public/fonts/book.ttf") format("truetype");
+  src: local("Franklin Gothic"), url("/fonts/book.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Franklin Gothic";
   font-weight: 500 900;
-  src: local("Franklin Gothic"),
-    url("/public/fonts/medium.ttf") format("truetype");
+  src: local("Franklin Gothic"), url("/fonts/medium.ttf") format("truetype");
 }
 
 @font-face {
@@ -22,12 +20,12 @@
   font-weight: 500 900;
   font-style: italic;
   src: local("Space Mono"),
-    url("/public/fonts/space-mono/bold-italic.ttf") format("truetype");
+    url("/fonts/space-mono/bold-italic.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Space Mono";
   font-weight: 100 400;
   src: local("Space Mono"),
-    url("/public/fonts/space-mono/regular.ttf") format("truetype");
+    url("/fonts/space-mono/regular.ttf") format("truetype");
 }
