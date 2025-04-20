@@ -1,0 +1,43 @@
+@use "resets" as resets;
+@use "colors" as colors;
+@use "fonts" as fonts;
+@use "utils" as utilities;
+@use "shadows" as shadows;
+@use "buttons" as buttons;
+@use "animations" as animations;
+@use "components/index" as components;
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: grid;
+  grid-template-areas: "aside content";
+  grid-template-columns: 300px auto;
+  font-family: var(--ff-main);
+  color: var(--color-display);
+}
+
+main {
+  grid-area: content;
+}
+
+aside {
+  grid-area: aside;
+}
+
+ol {
+  list-style-type: none;
+  padding: 0;
+}
+
+::selection {
+  color: var(--color-pink);
+}
+
+.figma-hover::selection,
+.figma-click::selection {
+  color: var(--color-froggy);
+}

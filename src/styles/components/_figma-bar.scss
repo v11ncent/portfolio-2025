@@ -1,0 +1,104 @@
+.figma-bar {
+  --padding-block: 24px;
+  --padding-inline: 16px;
+  --padding: 24px 16px;
+  --border: 1px solid var(--color-grey-100);
+
+  position: sticky;
+  top: 0;
+  bottom: 0;
+  font-weight: 400;
+  border-right: var(--border);
+
+  header {
+    padding-block: var(--padding-block);
+    padding-inline: var(--padding-inline);
+    border-bottom: var(--border);
+
+    .froggy-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      max-width: fit-content;
+    }
+
+    .froggy-container .chat-bubble {
+      position: absolute;
+      top: 50%;
+      right: -1em;
+      transform: translate(100%, -50%);
+
+      // &::before {
+      //   content: "";
+      //   position: absolute;
+      //   top: 50%;
+      //   left: 0;
+      //   width: 12px;
+      //   aspect-ratio: 1;
+      //   border-radius: 2px;
+      //   transform: translate(-50%, -50%) rotate(45deg);
+      //   box-shadow: var(--bs-default);
+      //   z-index: -1;
+      //   background-color: white;
+      // }
+
+      .message {
+        padding: 0.25em 2em;
+        border-radius: 10px;
+        color: var(--color-froggy);
+        background-color: white;
+        border: 0.5px solid var(--color-froggy);
+      }
+    }
+
+    button {
+      padding: 0;
+      border: transparent;
+      background: transparent;
+    }
+
+    .froggy {
+      cursor: pointer;
+      filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 15%));
+    }
+  }
+
+  .title {
+    margin-top: var(--padding-block);
+    font-size: 1.125em;
+  }
+
+  .layers {
+    padding: var(--padding-block) var(--padding-inline);
+  }
+
+  #layers-title {
+    margin-bottom: calc(var(--padding-block) / 2);
+    font-size: 1em;
+  }
+
+  .list-heading {
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  li:not(.list-heading) {
+    margin-bottom: 2px;
+    color: var(--color-text-light);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-pink);
+    }
+  }
+
+  .padding-left {
+    padding-left: var(--padding-inline);
+  }
+}

@@ -1,5 +1,6 @@
 ---
-
+import CodeBubble from "../components/CodeBubble.astro";
+import FigmaBar	from "../components/FigmaBar.astro";
 ---
 
 <html lang="en">
@@ -8,9 +9,25 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<link rel="stylesheet" href="/public/styles/index.css">
+		<title>Vince Corradetti | UI Engineer</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<main class="page--center">
+			<section aria-labelledby="hero-heading-element">
+				<hgroup>
+					<p class="overline">WIP</p>
+					<h1 id="hero-heading-element" class="title">UI Engineer That Sweats the Small Stuff</h1>
+					<p id="hero-subtitle-element" class="subtitle">
+						I'm Vince! A super passionate engineer experienced in building marketing & e-commerce sites.
+						I believe the web should be fun and accessible for all!
+					</p>
+				</hgroup>
+				<a id="hero-button-element" href="/documents/vince-corradetti-resume.pdf" class="primary">Download resume</a>
+
+				<CodeBubble />
+			</section>
+		</main>
+		<FigmaBar />
 	</body>
 </html>

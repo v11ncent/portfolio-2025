@@ -1,0 +1,127 @@
+---
+import Froggy from "../images/froggy.svg";
+import Cube from "../images/cube.svg";
+---
+
+<aside class="figma-bar">
+  <header>
+    <div class="froggy-container">
+      <button id="froggy">
+        <Froggy />
+      </button>
+      <div class="chat-bubble">
+        <span class="message">Ribbit!!</span>
+      </div>
+    </div>
+    
+    <h2 class="title">My Portfolio 2025!!</h2>
+  </header>
+
+  <section aria-labelledby="layers-title" class="layers">
+    <h3 id="layers-title">Layers</h3>
+
+    <ol class="padding-left">
+      <li class="list-heading">
+        <Cube />
+        Homepage
+      </li>
+      <ol class="padding-left">
+        <li id="hero-heading-label" aria-controls="hero-heading-element">
+          <Cube />
+          Heading
+        </li>
+        <li id="hero-subtitle-label" aria-controls="hero-subtitle-element">
+          <Cube />
+          Subtitle
+        </li>
+        <li id="hero-button-label" aria-controls="hero-button-element">
+          <Cube />
+          Button
+        </li>
+        <li id="hero-code-label" aria-controls="hero-code-element">
+          <Cube />
+          Code Bubble
+        </li>
+      </ol>
+    </ol>
+  </section>
+</aside>
+
+<script>
+  const froggy = document.getElementById('froggy');
+  const chat = document.querySelector('.froggy-container .chat-bubble');
+  // const label = document.getElementById('heading-label');
+  // const heading = document.querySelector('h1');
+
+  const getLabelsAndElements = (layers: Element | null) => {
+    if (!layers) {
+      console.error('Warning: getLabelsAndElements() function passed null elements');
+      return;
+    }
+
+    // Grab labels and their associated elements
+    // Return an array of objects
+    const labels = [...layers.querySelectorAll('[aria-controls]')];
+    const objects = labels.map((label) => {
+      const id = label.getAttribute('aria-controls');
+      if (!id) return;
+
+      const element = document.getElementById(id);
+      return {
+        label,
+        element
+      };
+    }).filter(Boolean); // Can filter out null values like this, can also use `reduce()`
+
+    return objects;
+  }
+
+  const handleHover = (label: Element | null, element: HTMLElement | null): void => {
+    if (!label || !element) {
+      console.error('Warning: handleHover() function passed null elements');
+      return;
+    }
+
+    label.addEventListener('mouseenter', (event) => {
+      element.classList.add('figma-hover');
+    });
+
+    label.addEventListener('mouseleave', (event) => {
+      element.classList.remove('figma-hover');
+    });
+  }
+
+  const handleClick = (label: Element | null, element: HTMLElement | null): void => {
+    if (!label || !element) {
+      console.error('Warning: handleClick() function passed null elements');
+      return;
+    }
+
+    label.addEventListener('click', (event) => {
+      element.classList.toggle('figma-click');
+    });
+  }
+
+  const initFigmaBar = () => {
+    const layers = document.querySelector('.layers');
+    const objects = getLabelsAndElements(layers);
+
+    objects?.forEach((object) => {
+      if (!object) return;
+
+      const label = object['label'];
+      const element = object['element'];
+      handleHover(label, element);
+      handleClick(label, element);
+    });
+  }
+
+  initFigmaBar();
+
+  // Make this more accessible when it's not 2am
+  if (froggy && chat) {
+    froggy.addEventListener('click', (event) => {
+      chat.classList.toggle("show");
+    });
+  }
+</script>

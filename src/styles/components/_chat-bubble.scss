@@ -1,0 +1,7 @@
+.chat-bubble {
+  display: none;
+
+  &.show {
+    display: block;
+  }
+}

@@ -1,0 +1,56 @@
+.code-bubble {
+  --padding-block: 12px;
+  --padding-inline: 24px;
+  --border-radius: 30px;
+
+  position: relative;
+  max-width: 600px;
+  transform: translateX(25%);
+  margin: 100px 0 0 auto;
+  font-family: var(--ff-code);
+  color: white;
+  border-radius: var(--border-radius);
+
+  header {
+    position: relative;
+    padding: 8px var(--padding-inline);
+    color: var(--color-pink);
+    text-align: right;
+    background-color: var(--color-grey-900);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 10%;
+      width: 14px;
+      aspect-ratio: 1;
+      transform: translateY(-25%) rotate(45deg);
+      background-color: var(--color-grey-900);
+      border-radius: 4px;
+    }
+  }
+
+  .classes,
+  .properties {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .classes {
+    padding: calc(var(--padding-block) * 2) var(--padding-inline);
+    text-align: left;
+    background-color: var(--color-grey-800);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+
+    .class {
+      margin-bottom: 4px;
+      font-style: italic;
+    }
+  }
+
+  .properties {
+    padding-inline: var(--padding-inline);
+  }
+}

@@ -1,0 +1,33 @@
+:root {
+  --ff-main: "Franklin Gothic", sans-serif;
+  --ff-code: "Space Mono", serif;
+}
+
+@font-face {
+  font-family: "Franklin Gothic";
+  font-weight: 100 400;
+  src: local("Franklin Gothic"),
+    url("/public/fonts/book.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Franklin Gothic";
+  font-weight: 500 900;
+  src: local("Franklin Gothic"),
+    url("/public/fonts/medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Space Mono";
+  font-weight: 500 900;
+  font-style: italic;
+  src: local("Space Mono"),
+    url("/public/fonts/space-mono/bold-italic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Space Mono";
+  font-weight: 100 400;
+  src: local("Space Mono"),
+    url("/public/fonts/space-mono/regular.ttf") format("truetype");
+}

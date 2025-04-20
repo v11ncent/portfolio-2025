@@ -6,9 +6,13 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "styles": "sass --watch src/styles/index.scss public/styles/index.css --style compressed"
   },
   "dependencies": {
     "astro": "^5.7.4"
+  },
+  "devDependencies": {
+    "sass": "^1.86.3"
   }
 }
