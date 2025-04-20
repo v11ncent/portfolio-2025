@@ -43,16 +43,19 @@
     text-align: left;
     background-color: var(--color-grey-800);
     border-radius: 0 0 var(--border-radius) var(--border-radius);
+  }
 
-    .class {
-      margin-bottom: 4px;
-      font-style: italic;
-      font-size: 1.25em;
-    }
+  .class,
+  .properties {
+    font-size: 1.125em;
+  }
+
+  .class {
+    margin-bottom: 4px;
+    font-style: italic;
   }
 
   .properties {
     padding-inline: var(--padding-inline);
-    font-size: 1.125em;
   }
 }
