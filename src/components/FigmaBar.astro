@@ -80,6 +80,7 @@ import Cube from "../images/cube.svg";
   // Unwrap `.content` class
   const destroyInspectElement = (element: HTMLElement): void => {
     const content = element.querySelector('.content');
+    console.log(content?.innerHTML);
     if (content) element.innerHTML = content.innerHTML;
   }
 
@@ -144,7 +145,7 @@ import Cube from "../images/cube.svg";
       element.style.setProperty('--margin-bottom', style.marginBottom);
       element.style.setProperty('--margin-left', style.marginLeft);
       
-      // Look into accessibility into the future; this seems like a tough one
+      // Look into accessibility in the future; seems like a tough one
       const isActive = label.getAttribute('data-active');
       if (isActive) {
         destroyInspectElement(element);
@@ -164,7 +165,6 @@ import Cube from "../images/cube.svg";
 
   const initDevTools = () => {
     const figmaElements = getFigmaElements();
-    console.log(figmaElements);
     figmaElements?.forEach((element) => element  && handleInspectClick(element));
   }
 
