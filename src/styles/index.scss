@@ -12,6 +12,11 @@ body {
   height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 25%;
+}
+
 body {
   display: grid;
   grid-template-areas: "aside content";

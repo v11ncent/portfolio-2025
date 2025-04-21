@@ -6,16 +6,9 @@ import FigmaBar	from "../components/FigmaBar.astro";
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
-		<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
-		<link rel="shortcut icon" href="/favicon/favicon.ico" />
-		<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-		<meta name="apple-mobile-web-app-title" content="Vince | UI" />
-		<link rel="manifest" href="/favicon/site.webmanifest" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content="I'm Vince! A super passionate engineer experienced in building marketing & e-commerce sites. I believe the web should be fun and accessible for all!">
-		<title>Vince Corradetti | UI Engineer</title>
 
 		<!-- Facebook Meta Tags -->
 		<meta property="og:url" content="https://vincecorradetti.com">
@@ -32,17 +25,26 @@ import FigmaBar	from "../components/FigmaBar.astro";
 		<meta name="twitter:description" content="I'm Vince! A super passionate engineer experienced in building marketing & e-commerce sites. I believe the web should be fun and accessible for all!">
 		<meta name="twitter:image" content="/images/og.png">
 
+		<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+		<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+		<link rel="shortcut icon" href="/favicon/favicon.ico" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+		<meta name="apple-mobile-web-app-title" content="Vince | UI" />
+		<link rel="manifest" href="/favicon/site.webmanifest" />
+
 		<link rel="stylesheet" href="/styles/index.css">
+		<title>Vince Corradetti | UI Engineer</title>
 	</head>
 	<body>
 		<main class="page--center">
 			<section aria-labelledby="hero-heading-element">
 				<hgroup>
-					<p class="overline">WIP</p>
 					<h1 id="hero-heading-element" class="title">UI Engineer That Sweats the Small Stuff</h1>
 					<p id="hero-subtitle-element" class="subtitle">
-						I'm Vince! A super passionate engineer experienced in building marketing & e-commerce sites.
-						I believe the web should be fun and accessible for all!
+						<span class="content">
+							I'm Vince! A super passionate engineer experienced in building marketing & e-commerce sites.
+							I believe the web should be fun and accessible for all!
+						</span>
 					</p>
 				</hgroup>
 				<a id="hero-button-element" href="/documents/vince-corradetti-resume.pdf" class="primary">Download resume</a>
@@ -50,6 +52,7 @@ import FigmaBar	from "../components/FigmaBar.astro";
 				<CodeBubble />
 			</section>
 		</main>
+
 		<FigmaBar />
 	</body>
 </html>

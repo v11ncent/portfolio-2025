@@ -51,3 +51,90 @@
 .figma-click {
   color: var(--color-pink) !important;
 }
+
+[data-inspected] {
+  --border-width: 1.5px;
+
+  position: relative;
+  z-index: 1;
+
+  // Add white background behind element to clip
+  // out margin background colors
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    background-color: white;
+  }
+
+  .content {
+    position: relative;
+    z-index: -2;
+  }
+
+  .highlight-box {
+    --background-color: rgba(143, 213, 240, 0.55);
+    --border-color: #0088cc;
+
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--background-color);
+    outline: var(--border-width) dashed var(--border-color);
+    outline-offset: calc(-1 * (var(--border-width) + 0.5px));
+  }
+
+  .margin-box {
+    position: absolute;
+
+    // These `--margin` custom properties are set via JavaScript
+    inset: calc(-1 * var(--margin-top)) calc(-1 * var(--margin-right))
+      calc(-1 * var(--margin-bottom)) calc(-1 * var(--margin-left));
+    z-index: -4;
+    background-color: var(--color-yellow);
+    border: var(--border-width) solid var(--color-yellow);
+  }
+}
+
+// .inspect-click__margin {
+//   content: "";
+//   position: absolute;
+//   top: calc(-1 * var(--margin-top));
+//   right: calc(-1 * var(--margin-right));
+//   bottom: calc(-1 * var(--margin-bottom));
+//   left: calc(-1 * var(--margin-left));
+//   background-color: var(--margin-background-color);
+//   border: 1.5px solid var(--margin-background-color);
+//   z-index: -2;
+// }
+
+// The highlight box
+// .inspect-click__parent::before {
+//   content: "";
+//   position: absolute;
+//   inset: 0;
+//   color: var(--highlight-color);
+//   background-color: var(--highlight-background-color);
+//   outline: 1.5px dashed var(--highlight-border-color);
+//   outline-offset: -1px;
+//   z-index: -1;
+// }
+
+// .inspect-hover,
+// .inspect-click {
+//   --color: #5e8899;
+//   --background-color: rgb(183, 225, 242, 0.35);
+//   --border-color: #0088cc;
+
+//   position: relative;
+//   color: var(--color);
+//   outline: 1.5px dashed var(--border-color);
+
+//   &::after {
+//     content: "";
+//     position: absolute;
+//     inset: 0;
+//     background-color: var(--background-color);
+//   }
+// }

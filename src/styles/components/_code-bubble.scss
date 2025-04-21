@@ -3,12 +3,10 @@
   --padding-inline: 24px;
   --border-radius: 30px;
 
-  position: relative;
   max-width: 500px;
-  transform: translateX(25%);
   margin: 100px 0 0 auto;
-  font-family: var(--ff-code);
   color: white;
+  font-family: var(--ff-code);
   border-radius: var(--border-radius);
 
   header {

@@ -4,124 +4,179 @@ import Cube from "../images/cube.svg";
 ---
 
 <aside class="figma-bar">
-  <header>
-    <div class="froggy-container">
-      <button id="froggy">
-        <Froggy />
-      </button>
-      <div class="chat-bubble">
-        <span class="message">Ribbit!!</span>
+  <div>
+    <header>
+      <div class="froggy-container">
+        <button id="froggy">
+          <Froggy />
+        </button>
+        <div class="chat-bubble">
+          <span class="message">Ribbit!!</span>
+        </div>
       </div>
-    </div>
-    
-    <h2 class="title">My Portfolio 2025!!</h2>
-  </header>
+      
+      <h2 class="title">My Portfolio 2025!!</h2>
+    </header>
 
-  <section aria-labelledby="layers-title" class="layers">
-    <h3 id="layers-title">Layers</h3>
+    <section aria-labelledby="layers-title" class="layers">
+      <h3 id="layers-title">Layers</h3>
 
-    <ol class="padding-left">
-      <li class="list-heading">
-        <Cube />
-        Homepage
-      </li>
-      <ol class="padding-left">
-        <li id="hero-heading-label" aria-controls="hero-heading-element">
-          <Cube />
-          Heading
-        </li>
-        <li id="hero-subtitle-label" aria-controls="hero-subtitle-element">
-          <Cube />
-          Subtitle
-        </li>
-        <li id="hero-button-label" aria-controls="hero-button-element">
-          <Cube />
-          Button
-        </li>
-        <li id="hero-code-label" aria-controls="hero-code-element">
-          <Cube />
-          Code Bubble
-        </li>
-      </ol>
-    </ol>
-  </section>
+      <nav>
+        <ol class="padding-left">
+          <li class="list-heading">
+            <a href="/">
+              <Cube />
+              Homepage
+            </a>
+          </li>
+          <ol class="padding-left">
+            <li id="hero-heading-label" aria-controls="hero-heading-element">
+              <a href="#hero-heading-element">
+                <Cube />
+                Heading
+              </a>
+            </li>
+            <li id="hero-subtitle-label" aria-controls="hero-subtitle-element">
+              <a href="#hero-subtitle-element">
+                <Cube />
+                Subtitle
+              </a>
+            </li>
+            <li id="hero-button-label" aria-controls="hero-button-element">
+              <a href="#hero-button-element">
+                <Cube />
+                Button
+              </a>
+            </li>
+            <li id="hero-code-label" aria-controls="hero-code-element">
+              <a href="#hero-code-element">
+                <Cube />
+                Code Bubble
+              </a>
+            </li>
+          </ol>
+        </ol>
+      </nav>
+    </section>
+  </div>
 </aside>
 
 <script>
-  const froggy = document.getElementById('froggy');
-  const chat = document.querySelector('.froggy-container .chat-bubble');
-  // const label = document.getElementById('heading-label');
-  // const heading = document.querySelector('h1');
+  type FigmaElement = {
+    label: Element,
+    element: HTMLElement,
+  }
 
-  const getLabelsAndElements = (layers: Element | null) => {
-    if (!layers) {
-      console.error('Warning: getLabelsAndElements() function passed null elements');
-      return;
-    }
+  // Wraps element's contents in a `.content` container
+  // so we can layer it in our JavaScript
+  const buildInspectElement = (element: HTMLElement): void => {
+    const container = document.createElement('div');
+    container.classList.add('content');
+    container.innerHTML = element.innerHTML;
+    element.innerHTML = '';
+    element.appendChild(container);
+  };
 
-    // Grab labels and their associated elements
-    // Return an array of objects
-    const labels = [...layers.querySelectorAll('[aria-controls]')];
-    const objects = labels.map((label) => {
-      const id = label.getAttribute('aria-controls');
-      if (!id) return;
+  // Unwrap `.content` class
+  const destroyInspectElement = (element: HTMLElement): void => {
+    const content = element.querySelector('.content');
+    if (content) element.innerHTML = content.innerHTML;
+  }
 
-      const element = document.getElementById(id);
-      return {
+  // Finds previous inspected element and destroys before building new
+  const destroyPreviousInspectedElement = () => {
+    // Duplicated logic, can clean
+    const label = document.querySelector('[data-active]');
+    if (!label) return;
+
+    const id = label.getAttribute('aria-controls');
+    if (!id) return;
+
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    const highlightBox = element.querySelector('.highlight-box');
+    const marginBox = element.querySelector('.margin-box');
+    if (!highlightBox || !marginBox) return; 
+
+    element.removeChild(highlightBox);
+    element.removeChild(marginBox);
+    element.removeAttribute('data-inspected');
+    label.removeAttribute('data-active');
+  }
+
+  const getFigmaElements = (): FigmaElement[] => {
+    const figmaElements: FigmaElement[] = [];
+    const labels = Array.from(document.querySelectorAll('.figma-bar .layers li[aria-controls]'));
+
+    labels.forEach((label) => {
+      const associatedId = label.getAttribute('aria-controls');
+      if (!associatedId) return;
+
+      const associatedElement = document.getElementById(associatedId);
+      if (!associatedElement) return;
+
+      figmaElements.push({
         label,
-        element
-      };
-    }).filter(Boolean); // Can filter out null values like this, can also use `reduce()`
-
-    return objects;
-  }
-
-  const handleHover = (label: Element | null, element: HTMLElement | null): void => {
-    if (!label || !element) {
-      console.error('Warning: handleHover() function passed null elements');
-      return;
-    }
-
-    label.addEventListener('mouseenter', (event) => {
-      element.classList.add('figma-hover');
+        element: associatedElement
+      });
     });
 
-    label.addEventListener('mouseleave', (event) => {
-      element.classList.remove('figma-hover');
-    });
+    return figmaElements;
   }
 
-  const handleClick = (label: Element | null, element: HTMLElement | null): void => {
-    if (!label || !element) {
-      console.error('Warning: handleClick() function passed null elements');
-      return;
-    }
+  const handleInspectClick = (object: FigmaElement) => {
+    const label = object['label'];
+    const element = object['element'];
+    const highlightBox = document.createElement('div');
+    const marginBox = document.createElement('div');
+    highlightBox.classList.add('highlight-box');
+    marginBox.classList.add('margin-box');
 
     label.addEventListener('click', (event) => {
-      element.classList.toggle('figma-click');
+      event.preventDefault(); // Anchor element so prevent default
+      element.scrollIntoView();
+      destroyPreviousInspectedElement();
+
+      const style = window.getComputedStyle(element);
+      element.style.setProperty('--margin-top', style.marginTop);
+      element.style.setProperty('--margin-right', style.marginRight);
+      element.style.setProperty('--margin-bottom', style.marginBottom);
+      element.style.setProperty('--margin-left', style.marginLeft);
+      
+      // Look into accessibility into the future; this seems like a tough one
+      const isActive = label.getAttribute('data-active');
+      if (isActive) {
+        destroyInspectElement(element);
+        element.removeChild(highlightBox);
+        element.removeChild(marginBox);
+        element.removeAttribute('data-inspected');
+        label.removeAttribute('data-active');
+      } else {
+        buildInspectElement(element);
+        element.appendChild(highlightBox);
+        element.appendChild(marginBox);
+        element.setAttribute('data-inspected', 'true');
+        label.setAttribute('data-active', 'true');
+      }
     });
   }
 
-  const initFigmaBar = () => {
-    const layers = document.querySelector('.layers');
-    const objects = getLabelsAndElements(layers);
-
-    objects?.forEach((object) => {
-      if (!object) return;
-
-      const label = object['label'];
-      const element = object['element'];
-      handleHover(label, element);
-      handleClick(label, element);
-    });
+  const initDevTools = () => {
+    const figmaElements = getFigmaElements();
+    console.log(figmaElements);
+    figmaElements?.forEach((element) => element  && handleInspectClick(element));
   }
 
-  initFigmaBar();
+  initDevTools();
 
-  // Make this more accessible when it's not 2am
-  if (froggy && chat) {
-    froggy.addEventListener('click', (event) => {
-      chat.classList.toggle("show");
-    });
-  }
+  // const froggy = document.getElementById('froggy');
+  // const chat = document.querySelector('.froggy-container .chat-bubble');
+
+  // // Make this more accessible when it's not 2am
+  // if (froggy && chat) {
+  //   froggy.addEventListener('click', (event) => {
+  //     chat.classList.toggle("show");
+  //   });
+  // }
 </script>

@@ -10,6 +10,12 @@
   font-weight: 400;
   border-right: var(--border);
 
+  & > div {
+    position: sticky;
+    top: 0;
+    bottom: 0;
+  }
+
   header {
     padding-block: var(--padding-block);
     padding-inline: var(--padding-inline);
@@ -78,11 +84,11 @@
   }
 
   .list-heading {
-    margin-bottom: 10px;
+    margin-bottom: calc(var(--padding-block) / 3);
     font-weight: 500;
   }
 
-  li {
+  li a {
     display: flex;
     align-items: center;
     gap: 8px;
