@@ -24,7 +24,7 @@ import Cube from "../images/cube.svg";
       <nav>
         <ol class="padding-left">
           <li class="list-heading">
-            <a href="/">
+            <a href="#hero-section-element">
               <Cube />
               Homepage
             </a>
@@ -63,52 +63,64 @@ import Cube from "../images/cube.svg";
 
 <script>
   type FigmaElement = {
-    label: Element,
+    label: HTMLElement,
     element: HTMLElement,
   }
 
   // Wraps element's contents in a `.content` container
   // so we can layer it in our JavaScript
-  const buildInspectElement = (element: HTMLElement): void => {
+  // Look into accessibility in the future; seems like a tough one
+  const buildInspectedElement = (label: HTMLElement, element: HTMLElement): void => {
     const container = document.createElement('div');
+    const highlightBox = document.createElement('div');
+    const marginBox = document.createElement('div');
+    highlightBox.classList.add('highlight-box');
+    marginBox.classList.add('margin-box');
     container.classList.add('content');
+
+    label.setAttribute('data-active', 'true');
+    element.setAttribute('data-inspected', 'true');
+
+    const style = window.getComputedStyle(element);
+    element.style.setProperty('--margin-top', style.marginTop);
+    element.style.setProperty('--margin-right', style.marginRight);
+    element.style.setProperty('--margin-bottom', style.marginBottom);
+    element.style.setProperty('--margin-left', style.marginLeft);
+
+    // Wrap existing element DOM in `.content` container
     container.innerHTML = element.innerHTML;
     element.innerHTML = '';
     element.appendChild(container);
+    element.appendChild(highlightBox);
+    element.appendChild(marginBox);
   };
 
-  // Unwrap `.content` class
-  const destroyInspectElement = (element: HTMLElement): void => {
+  // Destroy inspect element DOM and styles
+  const destroyInspectedElement = (label: HTMLElement, element: HTMLElement): void => {
     const content = element.querySelector('.content');
-    console.log(content?.innerHTML);
-    if (content) element.innerHTML = content.innerHTML;
+    const highlightBox = element.querySelector('.highlight-box');
+    const marginBox = element.querySelector('.margin-box');
+
+    label.removeAttribute('data-active');
+    element.removeAttribute('data-inspected');
+    if (highlightBox) element.removeChild(highlightBox);
+    if (marginBox) element.removeChild(marginBox);
+    if (content) element.innerHTML = content.innerHTML; // Unwrap `.content` class
   }
 
   // Finds previous inspected element and destroys before building new
-  const destroyPreviousInspectedElement = () => {
-    // Duplicated logic, can clean
-    const label = document.querySelector('[data-active]');
+  const destroyPreviousInspectedElement = (): void => {
+    const label = document.querySelector('[data-active]') as HTMLElement;
+    const element = document.querySelector('[data-inspected') as HTMLElement;
     if (!label) return;
 
-    const id = label.getAttribute('aria-controls');
-    if (!id) return;
-
-    const element = document.getElementById(id);
-    if (!element) return;
-
-    const highlightBox = element.querySelector('.highlight-box');
-    const marginBox = element.querySelector('.margin-box');
-    if (!highlightBox || !marginBox) return; 
-
-    element.removeChild(highlightBox);
-    element.removeChild(marginBox);
-    element.removeAttribute('data-inspected');
-    label.removeAttribute('data-active');
+    destroyInspectedElement(label, element);
   }
 
   const getFigmaElements = (): FigmaElement[] => {
     const figmaElements: FigmaElement[] = [];
-    const labels = Array.from(document.querySelectorAll('.figma-bar .layers li[aria-controls]'));
+    // TypeScript can't infer the selector string, so it falls back to type Element[]
+    const labels = [...document.querySelectorAll('.figma-bar .layers li[aria-controls]')] as HTMLElement[];
 
     labels.forEach((label) => {
       const associatedId = label.getAttribute('aria-controls');
@@ -126,44 +138,26 @@ import Cube from "../images/cube.svg";
     return figmaElements;
   }
 
-  const handleInspectClick = (object: FigmaElement) => {
+  const handleInspectClick = (object: FigmaElement): void => {
     const label = object['label'];
     const element = object['element'];
-    const highlightBox = document.createElement('div');
-    const marginBox = document.createElement('div');
-    highlightBox.classList.add('highlight-box');
-    marginBox.classList.add('margin-box');
 
     label.addEventListener('click', (event) => {
       event.preventDefault(); // Anchor element so prevent default
       element.scrollIntoView();
-      destroyPreviousInspectedElement();
 
-      const style = window.getComputedStyle(element);
-      element.style.setProperty('--margin-top', style.marginTop);
-      element.style.setProperty('--margin-right', style.marginRight);
-      element.style.setProperty('--margin-bottom', style.marginBottom);
-      element.style.setProperty('--margin-left', style.marginLeft);
-      
-      // Look into accessibility in the future; seems like a tough one
       const isActive = label.getAttribute('data-active');
       if (isActive) {
-        destroyInspectElement(element);
-        element.removeChild(highlightBox);
-        element.removeChild(marginBox);
-        element.removeAttribute('data-inspected');
-        label.removeAttribute('data-active');
-      } else {
-        buildInspectElement(element);
-        element.appendChild(highlightBox);
-        element.appendChild(marginBox);
-        element.setAttribute('data-inspected', 'true');
-        label.setAttribute('data-active', 'true');
+        destroyInspectedElement(label, element);
+        return;
       }
+
+      destroyPreviousInspectedElement();
+      buildInspectedElement(label, element);
     });
   }
 
-  const initDevTools = () => {
+  const initDevTools = (): void => {
     const figmaElements = getFigmaElements();
     figmaElements?.forEach((element) => element  && handleInspectClick(element));
   }
