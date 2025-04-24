@@ -55,6 +55,7 @@ body:has(#figma-bar--full.hide) {
   bottom: 0;
   left: 0;
   min-width: 300px;
+  height: 100%;
   border-right: var(--border);
   background-color: white;
   z-index: 99;
