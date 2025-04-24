@@ -5,6 +5,8 @@
 @use "shadows" as shadows;
 @use "buttons" as buttons;
 @use "animations" as animations;
+@use "queries" as queries;
+@use "mixins" as mixins;
 @use "components/index" as components;
 
 html,
@@ -17,11 +19,16 @@ html {
 }
 
 body {
-  display: grid;
-  grid-template-areas: "aside content";
-  grid-template-columns: 300px auto;
   font-family: var(--ff-main);
   color: var(--color-display);
+  background-color: var(--color-page);
+
+  @media (min-width: queries.$mq-xl) {
+    display: grid;
+    grid-template-areas: "aside content";
+    grid-template-columns: 300px auto;
+    transition: 300ms ease-out; // We're transitioning this with JavaScript and inside `_figma-bar.scss`
+  }
 }
 
 main {

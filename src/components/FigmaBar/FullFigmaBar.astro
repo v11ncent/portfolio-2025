@@ -1,0 +1,60 @@
+---
+import Froggy from "../../images/froggy.svg";
+import SidebarIcon from "../../images/sidebar.svg";
+import Cube from "../../images/cube.svg";
+---
+
+<div id="figma-bar--full">
+  <header>
+    <div>
+      <span class="froggy">
+        <Froggy />
+      </span>
+      <button class="sidebar-button" aria-controls="figma-bar--full" aria-expanded="false">
+        <SidebarIcon />
+      </button>
+    </div>
+    <h2 class="title">My Portfolio 2025</h2>
+  </header>
+
+  <section aria-labelledby="layers-title" class="layers">
+    <h3 id="layers-title">Layers</h3>
+
+    <nav>
+      <ol class="padding-left">
+        <li class="list-heading">
+          <a href="#hero-section-element">
+            <Cube />
+            Homepage
+          </a>
+        </li>
+        <ol class="padding-left">
+          <li id="hero-heading-label" aria-controls="hero-heading-element">
+            <a href="#hero-heading-element">
+              <Cube />
+              Heading
+            </a>
+          </li>
+          <li id="hero-subtitle-label" aria-controls="hero-subtitle-element">
+            <a href="#hero-subtitle-element">
+              <Cube />
+              Subtitle
+            </a>
+          </li>
+          <li id="hero-button-label" aria-controls="hero-button-element">
+            <a href="#hero-button-element">
+              <Cube />
+              Button
+            </a>
+          </li>
+          <li id="hero-code-label" aria-controls="hero-code-element">
+            <a href="#hero-code-element">
+              <Cube />
+              Code Bubble
+            </a>
+          </li>
+        </ol>
+      </ol>
+    </nav>
+  </section>
+</div>

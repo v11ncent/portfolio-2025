@@ -1,9 +1,23 @@
+@use "../styles/queries" as queries;
+
 .page--center {
   display: grid;
   place-items: center;
   text-align: center;
-  padding: 32px;
-  background-color: var(--color-page);
+  padding: 16px;
+
+  @media (min-width: queries.$mq-xl) {
+    padding: 32px;
+  }
+
+  section:first-of-type {
+    margin-top: 144px;
+  }
+
+  hgroup {
+    display: grid;
+    place-items: center;
+  }
 
   .overline {
     position: relative;
@@ -30,21 +44,29 @@
 
   .title {
     margin-bottom: 16px;
-    font-size: 3.25em;
-    line-height: 1.25;
+    font-size: clamp(2em, 2em + 2vw, 3.25em);
+    line-height: 1.125;
     text-transform: capitalize;
   }
 
   .subtitle {
     max-width: 65ch;
     margin-bottom: 32px;
-    font-size: 1.5em;
+    font-size: 1.25em;
     line-height: 1.35;
     color: var(--color-text-light);
+
+    @media (min-width: queries.$mq-xl) {
+      font-size: 1.5em;
+    }
   }
 
   .primary {
-    font-size: 1.125em;
+    font-size: 1em;
+
+    @media (min-width: queries.$mq-xl) {
+      font-size: 1.125em;
+    }
   }
 }
 

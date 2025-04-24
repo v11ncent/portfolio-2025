@@ -1,70 +1,41 @@
 ---
-import Froggy from "../images/froggy.svg";
-import Cube from "../images/cube.svg";
+import FullFigmaBar from "./FullFigmaBar.astro";
+import SlimFigmaBar from "./SlimFigmaBar.astro";
 ---
 
-<aside class="figma-bar">
-  <div>
-    <header>
-      <div class="froggy-container">
-        <button id="froggy">
-          <Froggy />
-        </button>
-        <div class="chat-bubble">
-          <span class="message">Ribbit!!</span>
-        </div>
-      </div>
-      
-      <h2 class="title">My Portfolio 2025!!</h2>
-    </header>
-
-    <section aria-labelledby="layers-title" class="layers">
-      <h3 id="layers-title">Layers</h3>
-
-      <nav>
-        <ol class="padding-left">
-          <li class="list-heading">
-            <a href="#hero-section-element">
-              <Cube />
-              Homepage
-            </a>
-          </li>
-          <ol class="padding-left">
-            <li id="hero-heading-label" aria-controls="hero-heading-element">
-              <a href="#hero-heading-element">
-                <Cube />
-                Heading
-              </a>
-            </li>
-            <li id="hero-subtitle-label" aria-controls="hero-subtitle-element">
-              <a href="#hero-subtitle-element">
-                <Cube />
-                Subtitle
-              </a>
-            </li>
-            <li id="hero-button-label" aria-controls="hero-button-element">
-              <a href="#hero-button-element">
-                <Cube />
-                Button
-              </a>
-            </li>
-            <li id="hero-code-label" aria-controls="hero-code-element">
-              <a href="#hero-code-element">
-                <Cube />
-                Code Bubble
-              </a>
-            </li>
-          </ol>
-        </ol>
-      </nav>
-    </section>
-  </div>
+<aside>
+  <FullFigmaBar />
+  <SlimFigmaBar />
 </aside>
 
 <script>
   type FigmaElement = {
     label: HTMLElement,
     element: HTMLElement,
+  }
+
+  const initSidebarButtons = () => {
+    const buttons = document.querySelectorAll(".sidebar-button");
+
+    buttons?.forEach((button) => {
+      const id = button?.getAttribute("aria-controls");
+      if (!button || !id) return;
+
+      const bar = document.getElementById(id);
+      if (!bar) return;
+
+      button.addEventListener('click', (event) => {
+        const isExpanded = button.getAttribute('aria-expanded');
+
+        if (isExpanded === 'true') {
+          buttons.forEach((button) => button.setAttribute('aria-expanded', 'false'));
+          bar.classList.remove('hide');
+        } else {
+          buttons.forEach((button) => button.setAttribute('aria-expanded', 'true'));
+          bar.classList.add('hide');
+        }
+      });
+    });
   }
 
   // Wraps element's contents in a `.content` container
@@ -120,7 +91,7 @@ import Cube from "../images/cube.svg";
   const getFigmaElements = (): FigmaElement[] => {
     const figmaElements: FigmaElement[] = [];
     // TypeScript can't infer the selector string, so it falls back to type Element[]
-    const labels = [...document.querySelectorAll('.figma-bar .layers li[aria-controls]')] as HTMLElement[];
+    const labels = [...document.querySelectorAll('#figma-bar--full .layers li[aria-controls]')] as HTMLElement[];
 
     labels.forEach((label) => {
       const associatedId = label.getAttribute('aria-controls');
@@ -157,20 +128,28 @@ import Cube from "../images/cube.svg";
     });
   }
 
-  const initDevTools = (): void => {
-    const figmaElements = getFigmaElements();
-    figmaElements?.forEach((element) => element  && handleInspectClick(element));
+  // Hide if on mobile by default
+  const initFigmaBar = (): void => {
+    const isPhone = window.innerWidth < 1024 ? true : false;
+    if (isPhone) {
+      const figmaBar = document.getElementById("figma-bar--full");
+      figmaBar?.classList.add('hide');
+    }
+
+    window.addEventListener('resize', (event) => {
+      if (isPhone) {
+        const figmaBar = document.getElementById("figma-bar--full");
+        figmaBar?.classList.add('hide');
+      }
+    });
   }
 
+  const initDevTools = (): void => {
+    const figmaElements = getFigmaElements();
+    figmaElements?.forEach((element) => element && handleInspectClick(element));
+  }
+
+  initFigmaBar();
+  initSidebarButtons();
   initDevTools();
-
-  // const froggy = document.getElementById('froggy');
-  // const chat = document.querySelector('.froggy-container .chat-bubble');
-
-  // // Make this more accessible when it's not 2am
-  // if (froggy && chat) {
-  //   froggy.addEventListener('click', (event) => {
-  //     chat.classList.toggle("show");
-  //   });
-  // }
 </script>

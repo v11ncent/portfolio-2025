@@ -1,3 +1,5 @@
+@use "../queries" as queries;
+
 .code-bubble {
   --padding-block: 12px;
   --padding-inline: 24px;
@@ -45,7 +47,11 @@
 
   .class,
   .properties {
-    font-size: 1.125em;
+    font-size: 1em;
+
+    @media (min-width: queries.$mq-xl) {
+      font-size: 1.125em;
+    }
   }
 
   .class {

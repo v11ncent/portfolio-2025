@@ -1,4 +1,22 @@
-.figma-bar {
+@use "../mixins" as mixins;
+@use "../queries" as queries;
+
+.sidebar-button {
+  @include mixins.button-reset;
+  cursor: pointer;
+  color: var(--color-black);
+
+  &:hover {
+    color: var(--color-black-800);
+  }
+
+  svg {
+    pointer-events: none;
+  }
+}
+
+#figma-bar--full,
+#figma-bar--slim {
   --padding-block: 24px;
   --padding-inline: 16px;
   --padding: 24px 16px;
@@ -7,10 +25,29 @@
   --active-background-color: var(--color-blue);
   --active-color: var(--color-black);
 
-  position: sticky;
+  &.hide {
+    display: none;
+  }
+}
+
+// Translate the side panel collapse with grid-columns!! :)
+body:has(#figma-bar--full.hide) {
+  grid-template-columns: 0 auto;
+}
+
+#figma-bar--full {
+  position: fixed;
   top: 0;
   bottom: 0;
+  left: 0;
+  right: calc(var(--padding-inline) * 6);
   border-right: var(--border);
+  background-color: white;
+  z-index: 99;
+
+  @media (min-width: queries.$mq-xl) {
+    position: sticky;
+  }
 
   & > div {
     position: sticky;
@@ -22,58 +59,21 @@
     padding-block: var(--padding-block);
     padding-inline: var(--padding-inline);
     border-bottom: var(--border);
+  }
 
-    .froggy-container {
-      position: relative;
-      display: flex;
-      align-items: center;
-      max-width: fit-content;
-    }
+  header > div {
+    display: flex;
+    justify-content: space-between;
+  }
 
-    .froggy-container .chat-bubble {
-      position: absolute;
-      top: 50%;
-      right: -1em;
-      transform: translate(100%, -50%);
-
-      // &::before {
-      //   content: "";
-      //   position: absolute;
-      //   top: 50%;
-      //   left: 0;
-      //   width: 12px;
-      //   aspect-ratio: 1;
-      //   border-radius: 2px;
-      //   transform: translate(-50%, -50%) rotate(45deg);
-      //   box-shadow: var(--bs-default);
-      //   z-index: -1;
-      //   background-color: white;
-      // }
-
-      .message {
-        padding: 0.25em 2em;
-        border-radius: 10px;
-        color: var(--color-froggy);
-        background-color: white;
-        border: 0.5px solid var(--color-froggy);
-      }
-    }
-
-    button {
-      padding: 0;
-      border: transparent;
-      background: transparent;
-    }
-
-    .froggy {
-      cursor: pointer;
-      filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 15%));
-    }
+  header .froggy {
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 15%));
   }
 
   .title {
     margin-top: var(--padding-block);
-    font-size: 1.125em;
+    font-size: 1em;
+    white-space: nowrap;
   }
 
   .layers {
@@ -83,11 +83,13 @@
   #layers-title {
     margin-bottom: calc(var(--padding-block) / 2);
     font-size: 1em;
+    white-space: nowrap;
   }
 
   .list-heading {
-    margin-bottom: calc(var(--padding-block) / 3);
+    margin-bottom: calc(var(--padding-block) / 6);
     color: var(--color-active);
+    white-space: nowrap;
   }
 
   li {
@@ -125,9 +127,35 @@
     align-items: center;
     gap: 8px;
     margin-left: 4px;
+    white-space: nowrap;
+  }
+
+  li a svg {
+    min-width: 14px;
   }
 
   .padding-left {
     padding-left: var(--padding-inline);
+  }
+}
+
+#figma-bar--full.hide + #figma-bar--slim {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+#figma-bar--slim {
+  display: none;
+  position: fixed;
+  top: var(--padding-block);
+  left: var(--padding-inline);
+  z-index: 9;
+  padding: 12px 24px;
+  border-radius: 16px;
+  box-shadow: var(--bs-default);
+
+  .title {
+    font-size: 1em;
   }
 }
