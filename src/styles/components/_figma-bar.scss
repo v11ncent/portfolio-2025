@@ -25,8 +25,22 @@
   --active-background-color: var(--color-blue);
   --active-color: var(--color-black);
 
+  .froggy-icon svg {
+    min-width: 22px;
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 15%));
+  }
+
+  .sidebar-icon svg {
+    min-width: 16px;
+  }
+
+  .title {
+    font-size: 1em;
+    white-space: nowrap;
+  }
+
   &.hide {
-    display: none;
+    transform: translateX(-100%);
   }
 }
 
@@ -40,10 +54,11 @@ body:has(#figma-bar--full.hide) {
   top: 0;
   bottom: 0;
   left: 0;
-  right: calc(var(--padding-inline) * 6);
+  min-width: 300px;
   border-right: var(--border);
   background-color: white;
   z-index: 99;
+  transition: var(--transition-default);
 
   @media (min-width: queries.$mq-xl) {
     position: sticky;
@@ -66,14 +81,8 @@ body:has(#figma-bar--full.hide) {
     justify-content: space-between;
   }
 
-  header .froggy {
-    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 15%));
-  }
-
   .title {
     margin-top: var(--padding-block);
-    font-size: 1em;
-    white-space: nowrap;
   }
 
   .layers {
@@ -149,13 +158,17 @@ body:has(#figma-bar--full.hide) {
   display: none;
   position: fixed;
   top: var(--padding-block);
-  left: var(--padding-inline);
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 9;
   padding: 12px 24px;
   border-radius: 16px;
+  background-color: white;
   box-shadow: var(--bs-default);
+  transition: var(--transition-default);
 
-  .title {
-    font-size: 1em;
+  @media (min-width: queries.$mq-xl) {
+    left: var(--padding-inline);
+    transform: translateX(0);
   }
 }

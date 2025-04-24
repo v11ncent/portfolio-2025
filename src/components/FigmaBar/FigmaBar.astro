@@ -29,10 +29,10 @@ import SlimFigmaBar from "./SlimFigmaBar.astro";
 
         if (isExpanded === 'true') {
           buttons.forEach((button) => button.setAttribute('aria-expanded', 'false'));
-          bar.classList.remove('hide');
+          bar.classList.add('hide');
         } else {
           buttons.forEach((button) => button.setAttribute('aria-expanded', 'true'));
-          bar.classList.add('hide');
+          bar.classList.remove('hide');
         }
       });
     });
@@ -128,18 +128,22 @@ import SlimFigmaBar from "./SlimFigmaBar.astro";
     });
   }
 
-  // Hide if on mobile by default
+  // Hide by default on mobile
   const initFigmaBar = (): void => {
     const isPhone = window.innerWidth < 1024 ? true : false;
+    const figmaBar = document.getElementById('figma-bar--full');
+    const buttons = document.querySelectorAll('.sidebar-button');
+
+    // Can clean up this duplicate logic
     if (isPhone) {
-      const figmaBar = document.getElementById("figma-bar--full");
       figmaBar?.classList.add('hide');
+      buttons.forEach((button) => button.setAttribute('aria-expanded', 'false'));
     }
 
     window.addEventListener('resize', (event) => {
       if (isPhone) {
-        const figmaBar = document.getElementById("figma-bar--full");
         figmaBar?.classList.add('hide');
+        buttons.forEach((button) => button.setAttribute('aria-expanded', 'false'));
       }
     });
   }
