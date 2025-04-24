@@ -134,6 +134,12 @@ import SlimFigmaBar from "./SlimFigmaBar.astro";
     const figmaBar = document.getElementById('figma-bar--full');
     const buttons = document.querySelectorAll('.sidebar-button');
 
+    // Adds transition after first animation frame
+    // Avoids playing transition immediately on page load
+    requestAnimationFrame(() => {
+      figmaBar?.classList.add('transition-added');
+    })
+
     if (isPhone) {
       figmaBar?.classList.add('hide');
       buttons.forEach((button) => button.setAttribute('aria-expanded', 'false'));

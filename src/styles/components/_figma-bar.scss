@@ -59,10 +59,15 @@ body:has(#figma-bar--full.hide) {
   border-right: var(--border);
   background-color: white;
   z-index: 99;
-  transition: var(--transition-default);
 
   @media (min-width: queries.$mq-xl) {
     position: sticky;
+  }
+
+  // Add transition class after page load, so
+  // it doesn't play immediately
+  &.transition-added {
+    transition: var(--transition-default);
   }
 
   & > div {
@@ -152,24 +157,27 @@ body:has(#figma-bar--full.hide) {
 #figma-bar--full.hide + #figma-bar--slim {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 32px;
 }
 
 #figma-bar--slim {
   display: none;
   position: fixed;
-  top: var(--padding-block);
-  left: 50%;
-  transform: translateX(-50%);
+  top: var(--padding-inline);
+  left: var(--padding-inline);
+  right: var(--padding-inline);
   z-index: 9;
   padding: 12px 24px;
   border-radius: 16px;
   background-color: white;
   box-shadow: var(--bs-default);
+  border: 1px solid var(--color-grey-100);
   transition: var(--transition-default);
 
   @media (min-width: queries.$mq-xl) {
     left: var(--padding-inline);
+    max-width: fit-content;
     transform: translateX(0);
   }
 }
