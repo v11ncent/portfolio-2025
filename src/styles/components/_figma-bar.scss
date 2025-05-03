@@ -1,30 +1,18 @@
 @use "../mixins" as mixins;
 @use "../queries" as queries;
 
-.sidebar-button {
-  @include mixins.button-reset;
-  cursor: pointer;
-  color: var(--color-black);
-
-  &:hover {
-    color: var(--color-black-800);
-  }
-
-  svg {
-    pointer-events: none;
-  }
+aside {
+  --_padding-block: 24px;
+  --_padding-inline: 16px;
+  --_padding: 24px 16px;
+  --_border: 1px solid var(--color-grey-200);
+  --_hover-background-color: var(--color-grey-100);
+  --_active-background-color: var(--color-blue);
+  --_active-color: var(--color-black);
 }
 
 #figma-bar--full,
 #figma-bar--slim {
-  --padding-block: 24px;
-  --padding-inline: 16px;
-  --padding: 24px 16px;
-  --border: 1px solid var(--color-grey-200);
-  --hover-background-color: var(--color-grey-100);
-  --active-background-color: var(--color-blue);
-  --active-color: var(--color-black);
-
   .froggy-icon svg {
     min-width: 22px;
     filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 15%));
@@ -51,12 +39,10 @@ body:has(#figma-bar--full.hide) {
 
 #figma-bar--full {
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  min-width: 300px;
+  inset: 0 auto 0 0;
+  min-width: var(--_bar-width);
   height: 100%;
-  border-right: var(--border);
+  border-right: var(--_border);
   background-color: white;
   z-index: 99;
 
@@ -77,9 +63,9 @@ body:has(#figma-bar--full.hide) {
   }
 
   header {
-    padding-block: var(--padding-block);
-    padding-inline: var(--padding-inline);
-    border-bottom: var(--border);
+    padding-block: var(--_padding-block);
+    padding-inline: var(--_padding-inline);
+    border-bottom: var(--_border);
   }
 
   header > div {
@@ -88,22 +74,22 @@ body:has(#figma-bar--full.hide) {
   }
 
   .title {
-    margin-top: var(--padding-block);
+    margin-top: var(--_padding-block);
   }
 
   .layers {
-    padding: var(--padding-block) var(--padding-inline);
+    padding: var(--_padding-block) var(--_padding-inline);
   }
 
   #layers-title {
-    margin-bottom: calc(var(--padding-block) / 2);
+    margin-bottom: calc(var(--_padding-block) / 2);
     font-size: 1em;
     white-space: nowrap;
   }
 
   .list-heading {
-    margin-bottom: calc(var(--padding-block) / 6);
-    color: var(--color-active);
+    margin-bottom: calc(var(--_padding-block) / 6);
+    color: var(--_color-active);
     white-space: nowrap;
   }
 
@@ -112,7 +98,7 @@ body:has(#figma-bar--full.hide) {
     padding: 2px;
 
     &:not(.list-heading) {
-      margin-bottom: calc(var(--padding-block) / 6);
+      margin-bottom: calc(var(--_padding-block) / 6);
       color: var(--color-text-light);
     }
 
@@ -125,15 +111,15 @@ body:has(#figma-bar--full.hide) {
     }
 
     &:hover::before {
-      background-color: var(--hover-background-color);
+      background-color: var(--_hover-background-color);
     }
 
     &[data-active] {
-      color: var(--color-active);
+      color: var(--_color-active);
     }
 
     &[data-active]::before {
-      background-color: var(--active-background-color);
+      background-color: var(--_active-background-color);
     }
   }
 
@@ -150,7 +136,7 @@ body:has(#figma-bar--full.hide) {
   }
 
   .padding-left {
-    padding-left: var(--padding-inline);
+    padding-left: var(--_padding-inline);
   }
 }
 
@@ -164,9 +150,9 @@ body:has(#figma-bar--full.hide) {
 #figma-bar--slim {
   display: none;
   position: fixed;
-  top: var(--padding-inline);
-  left: var(--padding-inline);
-  right: var(--padding-inline);
+  top: var(--_padding-inline);
+  left: var(--_padding-inline);
+  right: var(--_padding-inline);
   z-index: 9;
   padding: 12px 24px;
   border-radius: 16px;
@@ -176,8 +162,22 @@ body:has(#figma-bar--full.hide) {
   transition: var(--transition-default);
 
   @media (min-width: queries.$mq-xl) {
-    left: var(--padding-inline);
+    left: var(--_padding-inline);
     max-width: fit-content;
     transform: translateX(0);
+  }
+}
+
+.sidebar-button {
+  @include mixins.button-reset;
+  cursor: pointer;
+  color: var(--color-black);
+
+  &:hover {
+    color: var(--color-black-800);
+  }
+
+  svg {
+    pointer-events: none;
   }
 }

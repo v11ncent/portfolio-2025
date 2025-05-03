@@ -15,25 +15,18 @@ import SlimFigmaBar from "./SlimFigmaBar.astro";
   }
 
   const initSidebarButtons = () => {
-    const buttons = document.querySelectorAll(".sidebar-button");
+    const buttons = document.querySelectorAll('.sidebar-button');
 
-    buttons?.forEach((button) => {
-      const id = button?.getAttribute("aria-controls");
-      if (!button || !id) return;
-
-      const bar = document.getElementById(id);
+    buttons.forEach((button) => {
+      const id = button.getAttribute('aria-controls');
+      const bar = document.getElementById(id!!);
       if (!bar) return;
 
       button.addEventListener('click', (event) => {
-        const isExpanded = button.getAttribute('aria-expanded');
+        const isExpanded = button.getAttribute('aria-expanded') === 'true' ? true : false;
 
-        if (isExpanded === 'true') {
-          buttons.forEach((button) => button.setAttribute('aria-expanded', 'false'));
-          bar.classList.add('hide');
-        } else {
-          buttons.forEach((button) => button.setAttribute('aria-expanded', 'true'));
-          bar.classList.remove('hide');
-        }
+        buttons.forEach((button) => button.setAttribute('aria-expanded', String(!isExpanded)));
+        bar.classList.toggle('hide', isExpanded);
       });
     });
   }
@@ -128,6 +121,26 @@ import SlimFigmaBar from "./SlimFigmaBar.astro";
     });
   }
 
+  const initMacros = (): void => {
+    window.addEventListener('keydown', (event) => {
+      const ctrl = event.ctrlKey;
+      const slash = event.key.toLowerCase() === '\\';
+      if (!(ctrl && slash)) return;
+      event.preventDefault();
+
+      const buttons = document.querySelectorAll('.sidebar-button');
+      buttons.forEach((button) => {
+        const id = button.getAttribute('aria-controls');
+        const bar = document.getElementById(id!!);
+        if (!bar) return;
+
+        const isExpanded = button.getAttribute('aria-expanded') === 'true' ? true : false;
+        button.setAttribute('aria-expanded', String(!isExpanded));
+        bar.classList.toggle('hide', isExpanded);
+      });
+    });
+  }
+
   // Hide by default on mobile
   const initFigmaBar = (): void => {
     const isPhone = window.innerWidth < 1024 ? true : false;
@@ -144,6 +157,8 @@ import SlimFigmaBar from "./SlimFigmaBar.astro";
       figmaBar?.classList.add('hide');
       buttons.forEach((button) => button.setAttribute('aria-expanded', 'false'));
     }
+
+    initMacros();
   }
 
   const initDevTools = (): void => {
