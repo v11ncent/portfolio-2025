@@ -20,17 +20,16 @@ html {
 }
 
 body {
-  --_bar-width: 250px;
+  --_bar-width: 300px;
 
-  display: grid;
-  grid-template-areas: "aside content";
-  grid-template-columns: var(--_bar-width) auto;
   font-family: var(--ff-main);
   color: var(--color-display);
   background-color: var(--color-page);
 
-  @media (min-width: queries.$mq-lg) {
-    --_bar-width: 300px;
+  @media (min-width: queries.$mq-xl) {
+    display: grid;
+    grid-template-areas: "aside content";
+    grid-template-columns: var(--_bar-width) auto;
 
     // We're transitioning this with JavaScript and inside `_figma-bar.scss`
     transition: var(--transition-default);
